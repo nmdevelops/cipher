@@ -5,13 +5,26 @@ var keyBaseAppend;
 var encryptionKey;
 var character;
 var numericPublic = [];
-var numericPrivate = [];
 var encryptedBit;
 var messageEncrypted = [];
-var stringKey;
-// var stringBit;
+var messageEncryptedString;
+var messageEncryptedClean;
 //back-end
 var alphabetPublic = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"," ","."];
+
+var formReset = (function () {
+  message = 0;
+  shift = 0;
+  keyBase = [];
+  keyBaseAppend = [];
+  encryptionKey = [];
+  messageEncrypted = [];
+  messageEncryptedString = [];
+  messageEncryptedClean = [];
+  numericPublic = [];
+  $(".output ul").empty();
+  $(".output").hide();
+})
 
 var encode = (function () {
   keyBase = alphabetPublic.slice(shift);
@@ -21,7 +34,7 @@ var encode = (function () {
   for (var i = 0; i <= message.length; i++) {
     message = message.toLowerCase();
     character = message.charAt(i);
-    numeral = alphabetPublic.indexOf(character);
+    var numeral = alphabetPublic.indexOf(character);
     numericPublic.push(numeral);
   }
 
@@ -36,7 +49,7 @@ var encode = (function () {
   $(".output").show();
   $(".output ul").append("<li>" + messageEncryptedClean + "</li>");
   $("#key").text(shift);
-})
+});
 
 
 
@@ -45,13 +58,17 @@ var encode = (function () {
 
 
 //front-end
-$(document).ready(function (){
+$(document).ready(function () {
+  $("input#message, input#keyShift").click(function () {
+    formReset();
+  });
   $(".userInputs form").submit(function (event) {
     event.preventDefault();
+    formReset();
     message = $("input#message").val();
     shift = $("input#keyShift").val();
     encode();
   });
 
 
-})
+});
